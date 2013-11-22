@@ -466,4 +466,11 @@ class Article < Content
     to = to - 1 # pull off 1 second so we don't overlap onto the next day
     return from..to
   end
+
+  def merge_with(id)
+    mergee = Article.find_by_id(id)
+    return false unless mergee
+    self.body += "\n\n" + mergee.body
+    self.save!
+  end
 end

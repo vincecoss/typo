@@ -142,7 +142,7 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
-
+    
     @mergeable = @article && current_user.admin?
 
     @article = Article.get_or_build_article(id)
@@ -150,8 +150,10 @@ class Admin::ContentController < Admin::BaseController
 
     @post_types = PostType.find(:all)
     if request.post?
-      if params[:article][:draft]
+      if params[:article] && params[:article][:draft]
         get_fresh_or_existing_draft_for_article
+      elsif params[:merge_with]
+        @article.merge_with params[:merge_with]
       else
         if not @article.parent_id.nil?
           @article = Article.find(@article.parent_id)
