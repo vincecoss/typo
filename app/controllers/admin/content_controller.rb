@@ -152,7 +152,7 @@ class Admin::ContentController < Admin::BaseController
     if request.post?
       if params[:article] && params[:article][:draft]
         get_fresh_or_existing_draft_for_article
-      elsif params[:merge_with]
+      elsif params[:merge_with] && @mergeable
         @article.merge_with params[:merge_with]
       else
         if not @article.parent_id.nil?
