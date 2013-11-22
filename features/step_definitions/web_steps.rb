@@ -41,12 +41,49 @@ Given /^the blog is set up$/ do
                 :profile_id => 1,
                 :name => 'admin',
                 :state => 'active'})
+
+   User.create!({:login => 'Blank',
+                :password => 'dude1',
+                :email => 'joe2@snow.com',
+                :profile_id => 2,
+                :name => 'Blank Dude',
+                :state => 'active'})
+
+   Article.create!({
+                :allow_comments => true,
+                :allow_pings => true,
+                :author => "Blank",
+                :body => "Tabs are awesome pew pew",
+                :guid => "1bf3e2ca-ed7b-4562-8a4a-8ce8438822c9",
+                :id => 2,
+                :permalink => "tab",
+                :post_type => "read",
+                :published => true,
+                :published_at => "2012-06-09 21:51:55 UTC",
+                :settings => {"password"=>""},
+                :state => "published",
+                :text_filter_id => 5,
+                :title => "Tab",
+                :type => "Article",
+                :user_id => 2})
 end
 
 And /^I am logged into the admin panel$/ do
   visit '/accounts/login'
   fill_in 'user_login', :with => 'admin'
   fill_in 'user_password', :with => 'aaaaaaaa'
+  click_button 'Login'
+  if page.respond_to? :should
+    page.should have_content('Login successful')
+  else
+    assert page.has_content?('Login successful')
+  end
+end
+
+And /^I am logged into the admin panel as publisher$/ do
+  visit '/accounts/login'
+  fill_in 'user_login', :with => 'Blank'
+  fill_in 'user_password', :with => 'dude1'
   click_button 'Login'
   if page.respond_to? :should
     page.should have_content('Login successful')

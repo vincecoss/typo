@@ -3,6 +3,7 @@ config/mail.yml
 *~
 db/*.sqlite*
 db/schema.rb
+db/db_*
 .*.swp
 .*.swo
 .DS_Store
@@ -23,3 +24,5 @@ public/cache/*
 .rbenv-version
 bin/
 .bundle/
+local.txt
+submission.txt

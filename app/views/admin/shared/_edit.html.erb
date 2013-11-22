@@ -4,3 +4,14 @@
   <%= render :partial => "form" %>
 
 <% end %>
+
+<% if @mergeable %>
+	<h4><%= _('Merge Articles') %></h4>
+	<%= form_tag(form_action, :id => "#{form_type}_form", :enctype => "multipart/form-data", :class => className) do %>
+		<%= label_tag 'merge_id', _('Article ID') %>
+		<div class='input'>
+			<%= text_field 'merge', 'id', {:name => 'merge_id', :class => 'span5'}  %>
+		</div>
+		<%= submit_tag _('Merge') %>
+	<% end %>
+<% end %>
